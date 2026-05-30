@@ -483,27 +483,7 @@ section, footer{ scroll-margin-top: 120px; }
 }
 
 /* มือถือเล็ก: แก้ปัญหา TH/EN บัง email โดยทำ topbar เป็น 2 แถว */
-@media (max-width: 520px){
-  .topbar__inner{
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    padding: 10px 0;
-  }
 
-  .topbar__left{
-    gap: 8px;
-  }
-
-  .topbar__right{
-    justify-content: flex-end;
-  }
-
-  /* ถ้า email ยาว ให้ขึ้นบรรทัดใหม่ */
-  .topbar__left a[href^="mailto:"]{
-    flex-basis: 100%;
-  }
-}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
@@ -782,4 +762,48 @@ body.is-locked{ overflow:hidden; }
   min-height: 320px;
   object-fit: cover;
   display: block;
+}
+/* ============================================
+   Topbar responsive — แก้มือถือ
+============================================ */
+
+/* มือถือ ≤ 767px : ซ่อน email ออก เหลือแค่ phone + ปุ่มติดต่อ + lang */
+@media (max-width: 767px) {
+  .topbar__inner {
+    flex-direction: row;      /* ยังเป็น 1 แถว */
+    align-items: center;
+    padding: 7px 0;           /* ลด padding บน-ล่าง */
+    gap: 8px;
+  }
+
+  /* ซ่อน email และ separator ตัวที่ 2 */
+  .topbar__left a[href^="mailto:"],
+  .topbar__left .sep:nth-child(3) {
+    display: none;
+  }
+
+  .topbar__left {
+    gap: 7px;
+    flex-wrap: nowrap;        /* ห้ามขึ้นบรรทัดใหม่ */
+    overflow: hidden;
+  }
+
+  /* ย่อ font นิดหน่อย */
+  .topbar__inner {
+    font-size: 0.82rem;
+  }
+
+  /* ย่อปุ่ม pill */
+  .pill {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
+  }
+}
+
+/* มือถือเล็กมาก ≤ 380px : ซ่อน phone ด้วย เหลือแค่ปุ่มติดต่อ + lang */
+@media (max-width: 380px) {
+  .topbar__left a[href^="tel:"],
+  .topbar__left .sep:first-of-type {
+    display: none;
+  }
 }
